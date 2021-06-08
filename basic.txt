@@ -1,0 +1,18 @@
+=>Difference between maven and gradle (what are these)
+
+=>annotations
+	1.  @RestController
+	2.  @GetMapping
+	3.  @RequestMapping(path = "api/v1/student")
+ 
+=> Dependency injection (autowire searches by type , qualifier searches by name)  
+	1.   @AutoWired                     (to tell that magically insttantie this object)
+	2.   @Component/@Service (to tell this is spring bean)
+	3.    @Scope(value=“prototype”)
+	4.   @Qualifier(“namematching”)  then @Component(“namematching”)
+
+ =>	Api layer		(controller class)
+	Service layer	(service class == business logic)
+	DataAccess layer 
+
+
