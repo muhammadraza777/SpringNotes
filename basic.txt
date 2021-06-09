@@ -1,9 +1,99 @@
-=>Difference between maven and gradle (what are these)
 
-=>annotations
-	1.  @RestController
-	2.  @GetMapping
-	3.  @RequestMapping(path = "api/v1/student")
+===============================================================================================
+
+=>Difference between maven and gradle (what are these)
+=>  (* name value path ?)
+
+
+===============================================================================================
+
+=> points
+	1.  @RestController				(class)				
+		(put on class where you want to set rest end points- api/controller class)
+
+	2.  @Controller					(class)				
+		(same as above but diiference is that if you wont type @Controller then return with return type string means name of frontend(.html/.ejs) page now add @responseBody to make sure return is not name of frontend but some data response api)
+
+	3.  @GetMapping	 or @GetMapping("foo")		(method)
+		(it is actually path="foo")
+
+
+	4.  @RequestMapping or @RequestMapping(path = "foo")	(method/class)
+
+
+	5.  @GetMapping is a composed annotation that acts as a shortcut for @RequestMapping(method = RequestMethod.GET)
+
+	6.  Handle Parameters from requests		
+		*Method A  (localhost:9090/api/foo?id=9)
+		
+			@GetMapping("/api/foos")
+			public String getFoos(@RequestParam String id) {
+    				return "ID: " + id;
+			}
+
+		*Method B (localhost:9090/api/foo?myId=9)
+		
+			@GetMapping("/api/foos")
+			public String getFoos(@RequestParam(name = "myId") String id) {
+    				return "ID: " + id;
+			}
+
+		*Method C 
+			@RequestParam(required = false)
+
+		*Method D 
+			@RequestParam(defaultValue = "test")
+
+
+		*Method E  (localhost:9090/api/foo?id=9&name=raza&age=33)
+		
+			@GetMapping("/api/foos")
+			public String getFoos(Person p) {      //access whole object as it as
+    				return "ID: " + p.id + p.name + p.age;
+			}
+
+
+	7. Wildcard
+	
+			@RequestMapping(path="/{name}/{age}")
+			    public String getMessage(@PathVariable("name") String Myname,@PathVariable("age") String Myage) {
+        
+			        var msg = String.format("%s is %s years old", Myname, Myage);
+        
+			        return msg;
+    			}
+
+	8. Return type is converted from java object to json by jackson jar in maven dependices. no need to return string so that it become json,just return normal java object it will convert automatically
+
+	9. Content Negotiation
+
+		* Adding xml support
+			1. search for maven repo of jackson dataformat xml and add in pom.xml
+			2. now it will return both json and xml as per your request    (Headers ma Accept: Application/json)
+		
+		* Apply restriction that only send xml (or send  response to only those clients who ask for  xml)
+			
+			@GetMapping(path="foo",produces={"application/xml"})
+			
+			or
+			
+			@PostMapping(path="foo",consumes={"application/xml"})
+			public Person addPerson(@RequestBody Person P){
+				//xyz code using p
+			}
+
+	
+
+
+
+
+===============================================================================================
+ =>	Api layer		(controller class)
+	Service layer	(service class == business logic)
+	DataAccess layer 
+
+
+===============================================================================================
  
 => Dependency injection (autowire searches by type , qualifier searches by name)  
 	1.   @AutoWired                     (to tell that magically insttantie this object)
@@ -11,8 +101,6 @@
 	3.    @Scope(value=“prototype”)
 	4.   @Qualifier(“namematching”)  then @Component(“namematching”)
 
- =>	Api layer		(controller class)
-	Service layer	(service class == business logic)
-	DataAccess layer 
 
+===============================================================================================
 
